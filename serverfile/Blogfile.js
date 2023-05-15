@@ -2,6 +2,21 @@ const BlogModel = require("./connection");
 
 // using async await
 
+// pagination
+
+exports.Pagination = async (req, res) => {
+  let page = Number(req.query.page) || 1;
+  let limit = Number(req.query.limit) || 3;
+
+  let skip = (page - 1) * limit;
+
+  console.log(page);
+
+  let data = await BlogModel.find().skip(skip).limit(limit);
+
+  res.status(200).json({ data, hits: data.length });
+};
+
 // filter by author
 
 exports.FindeByAuthor = async (req, res) => {
